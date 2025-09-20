@@ -1,18 +1,22 @@
-import sys
-sys.setrecursionlimit(100000)
+from collections import deque
 
-def dfs(r, c, num):
+def bfs(r, c, num):
     dr = [-1, 0, 1, 0]
     dc = [0, -1, 0, 1]
+    q = deque([(r, c)])
 
-    for d in range(4):
-        nr = r + dr[d]
-        nc = c + dc[d]
+    while q:
+        cr, cc = q.popleft()
+        visited[cr][cc] = 1
 
-        if 0 <= nr < N and 0 <= nc < N and visited[nr][nc] == 0:
-            if data[nr][nc] > num:
-                visited[nr][nc] = 1
-                dfs(nr, nc, num)
+        for d in range(4):
+            nr = cr + dr[d]
+            nc = cc + dc[d]
+
+            if 0 <= nr < N and 0 <= nc < N and visited[nr][nc] == 0:
+                if data[nr][nc] > num:
+                    q.append((nr, nc))
+                    visited[nr][nc] = 1
 
 
 N = int(input())
@@ -40,6 +44,6 @@ for i in range(re_M + 1):
             if data[r][c] > i and visited[r][c] == 0:
                 cnt += 1
                 visited[r][c] = 1
-                dfs(r, c, i)
+                bfs(r, c, i)
     result = max(cnt, result)
 print(result)
