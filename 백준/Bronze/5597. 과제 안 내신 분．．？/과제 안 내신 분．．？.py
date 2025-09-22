@@ -1,8 +1,10 @@
-students = [i for i in range(1, 31)]
+students = [0]*31
 
-for _ in range(28):
+for i in range(28):
     applied = int(input())
-    students.remove(applied)
+    students[applied] = 1
 
-print(min(students))
-print(max(students))
+for i in range(1, len(students)):
+    if students[i] != 1:
+        print(i)
+
